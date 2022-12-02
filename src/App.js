@@ -1,16 +1,12 @@
 import React from "react";
-import Login from './components/Login'
-import  {loginAPI}  from "./utils";
-import './App.css'
- 
+import Login from './components/auth/Login'
 
-const App = ()=>{
-  const appLoginSubmit = (email,psw)=>{     
-    loginAPI(email,psw)     
-  }     
+import './App.css' 
+
+const App = ()=>{    
   return (
   <div className="app">     
-    <Login  handleLoginSubmit={appLoginSubmit} />    
+    <Login />    
   </div>
   )   
 }
