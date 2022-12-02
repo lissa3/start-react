@@ -1,15 +1,16 @@
 import React from "react";
-import SearchBar from "./components/SearchBar";
-import  sendRequest  from "./utils";
+import Login from './components/Login'
+import  {loginAPI}  from "./utils";
 import './App.css'
+ 
 
-function App() {    
-  const appOnSubmit = (term)=>{     
-    sendRequest(term)     
-  }      
+const App = ()=>{
+  const appLoginSubmit = (email,psw)=>{     
+    loginAPI(email,psw)     
+  }     
   return (
-  <div className="app">      
-    <SearchBar  handleSubmit={appOnSubmit} />    
+  <div className="app">     
+    <Login  handleLoginSubmit={appLoginSubmit} />    
   </div>
   )   
 }
