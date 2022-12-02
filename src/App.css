@@ -6,7 +6,7 @@ body{
    flex-direction: column;
    align-items: center;
 }
-button{
+.but{
     background-color: brown;
     color:white;
     border:solid 1px solid white;
@@ -14,12 +14,22 @@ button{
     font-size:20px;
     padding:10px;
     width:30%;
+    margin-top: 30px;
 
 }
-.animal-list{
+/* form search */
+.input-form{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    
+    flex-direction: column;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid black;
+    width:90%;
+    padding:20px;
+
+}
+.form{
+    display: flex;
+    flex-direction: column;   
+    padding:20px;
 }
