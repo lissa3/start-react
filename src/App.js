@@ -1,34 +1,29 @@
 import React from "react";
+import Wish from "./components/Wish";
+import { logic } from "./utils";
 import { useState } from "react";
-import AnimalShow from "./components/AnimalShow";
+import PaymentInfo from "./components/PaymentDetail";
 import './App.css'
 
-function App() {        
-  const getAnimal = ()=>{
-      let arr = ["bird","cow","horse","dog","gator","cat","horse"]
-      const idx = Math.round(Math.random()*(arr.length -1));         
-      return arr[idx]
-    }
-    
-    const [animals, setAnimal] = useState([]);     
-    const handleClick = (e)=>{               
-      setAnimal([...animals,getAnimal()])  
-           
-    } 
-    // iteration: applly call-back for each elem in arr(wrap in comp) 
-    const listAnimals =  animals.map((animal,index)=>{
-      return <AnimalShow type={animal} key={index}></AnimalShow>   
-      
-    })  
-    return(
-      <div className="app">        
-        <button onClick={handleClick}>
-          Add animal
-        </button>        
-        <div className="animal-list">{listAnimals}</div>                  
-          
-      </div>      
-    )
-}
+function App() {  
+  const [extra,setExtra] = useState(0)
+  const [total,setTotal] = useState(0)
 
+    
+  const handleSubmit = (bill,tip)=>{ 
+    // let of bill and tip are strings
+     const  startCalc = logic(tip);   
+    setTotal(startCalc.calcTotal(bill));
+    setExtra(startCalc.calcExtra(bill))
+  }   
+   
+  return (
+    <div>
+      <h2>Calculate your tip</h2>
+      <Wish collectDataForm = {handleSubmit} />
+      <PaymentInfo extra={extra} total={total}/>
+      
+    </div>
+  )
+}
 export default App;
