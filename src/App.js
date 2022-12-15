@@ -1,32 +1,42 @@
 import React from "react";
 import { useState } from "react";
-import AnimalShow from "./components/AnimalShow";
-import './App.css'
+import BookCreate from "./components/BookCreate";
+import BookList from "./components/BookList";
+
 
 function App() {        
-  const getAnimal = ()=>{
-      let arr = ["bird","cow","horse","dog","gator","cat","horse"]
-      const idx = Math.round(Math.random()*(arr.length -1));         
-      return arr[idx]
-    }
+  const [books,setBooks] = useState([])
+  const createBook = (title,id)=>{   
+    // ...books == copy-paste old value in a new [] in RAM amd add a new object
+    // a new ref появилась, к указывает на новый объект
+    setBooks([...books,{id,title}])
     
-    const [animals, setAnimal] = useState([]);     
-    const handleClick = (e)=>{               
-      setAnimal([...animals,getAnimal()])  
-           
-    } 
-    // iteration: applly call-back for each elem in arr(wrap in comp) 
-    const listAnimals =  animals.map((animal,index)=>{
-      return <AnimalShow type={animal} key={index}></AnimalShow>   
-      
-    })  
+  }
+  const deleteBookById = (id)=>{
+      const updatedBooks = books.filter((book)=>{
+        return book.id !== id
+      })
+      setBooks(updatedBooks)
+  }
+  const editBookById = (id,newTitle)=>{
+    
+    const updatedBooks = books.map((book)=>{
+      if(book.id===id){       
+        // NOT as book.title
+        return {...book,title:newTitle}
+      }
+      return book
+    })
+    console.log("updated: ",updatedBooks)
+    setBooks(updatedBooks)
+  }
+
     return(
-      <div className="app">        
-        <button onClick={handleClick}>
-          Add animal
-        </button>        
-        <div className="animal-list">{listAnimals}</div>                  
-          
+      <div className="app">   
+      <h1>Reading list</h1>
+      <div><BookList books={books} onDelete={deleteBookById} onEdit={editBookById}/></div>     
+      <div><BookCreate onCreate={createBook}/></div>     
+        
       </div>      
     )
 }
