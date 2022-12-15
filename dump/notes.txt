@@ -1,0 +1,189 @@
+1.First version of func in App.js
+function App() {    
+  const appOnSubmit = (term)=>{     
+    const result = sendRequest(term);
+    console.log(result) // Promise хе-хе... а ты ожидала array of objects? 
+    Why?
+    Хотим сказать js inter-ру: "Тут может быть долгое ожидание ответа API сервера,
+    поэтому я там использую асинх функцию ... застолблю здесь Promise, а ты (interp)
+    иди дальше 
+  } 
+1. как выглядит эта функция sendRequest?
+Re:
+в функции не делается запрос, а просто используются 
+слова: async (и даже БЕЗ await): этого уже было достаточно для всплытия этого чуда в компоненте App.js 
+
+const sendRequest = async (term)=>{ 
+    console.log("term is",term) 
+    const resp = await axios.get(....)  
+    return resp.data
+    
+}  
+
+2. Разгадка синтаксиса в userState [...myArray,newVal]
+react useState (mutable) vs (un-mutable)
+
+const [boos,setBooks] = userState ("")// or 0 // or null// or undefined
+                           vs
+const [boos,setBooks] = userState ([]) // {}
+
+Don't mutate original array or object |=> don't use push/index/dot notation ect
+
+if ref to object/array |=> in RAM place for default [] or {}
+  .push (.notation, index[..]) будут менять один и тот же объект в RAM
+  react sees old var [] and new var value -> same object(array )
+  поэтому реакт не будет re-render
+  -----------------------------------
+          ARRAYS  
+Methods
+1. create a new array 
+2. copy-paste there old content  
+3. update it with a new value (spread operator)
+4. pass collection to setBooks function 
+
+================================
+  to the end
+================================
+  const newVal = [
+    ...arr,newVal
+  ]
+  setBooks(newVal)
+
+================================  
+  to the head
+================================
+  const newVal = [
+    newVal,...arr
+  ]
+  setBooks(newVal)
+
+===================================  
+  add to the middle of an array
+===================================
+
+  const myAction = (newColor,idx)=>{
+      const updateColors = [
+        ...colors.slice(0,idx),
+        newColor,
+        ...colors.splice(idx)
+      ]
+  }
+  setColors(colors)
+
+
+===================================  
+  remove elem with a given value
+===================================  
+
+const removeColorAtValue =(colorToRemove)=>{
+    const updatedColors = colors.filter((color)=>{
+      return color !=colorToRemove
+    })
+  setBooks(updatedColors)
+  }
+  
+
+===================================  
+  remove elem with a given index
+===================================  
+
+const removeColor =(indexToRemove)=>{
+    const updatedColors = colors.filter((color,idx)=>{
+      return idx != indexToRemove
+    })
+  setBooks(updateColors)
+
+  }
+
+===================================  
+  modify en elem based on a property
+===================================  
+const [books,setBooks] = useState([{id:1,title:"one",id:2,title:"two"}])
+
+const adjustObj = (id,newTitle)=>{
+  
+  const updatedBooks = books.map((book)=>{
+      if(book.id===id){
+        // create a new object: {...book,title:newTitle}
+        // original obect is NOT MODIFIED
+        return {...book,title:newTitle}
+      }
+      return book
+    })
+  setBooks(updatedBooks);
+ }
+================================
+const addBook = (title) => {
+    const book = { title: title, id: ~~(Math.random() * 1000) };
+    setBooks([...books, book])
+  };
+
+? Why NOT like book.title == newTitle ( ведь создание нового объекта требует RAM )
+Re:same reason as in case arra and update state
+              ============
+                OBJECTS
+              ============
+
+
+1. по аналогии с arrays, но есть ньюансы
+
+ведь по идее до тех пор пока создается новый список с объектом,
+выпиленным из старого, я могу change obj property as obj.title = newTitle
+
+Но этого лучше не делать, т.к. при ОПТИМИЗАЦИИ список может НЕ обновляться
+
+===================================================================
+A.
+Changing Elements
+Objects in an array can be modified by using the map function.
+заметь, это список объектов
+===================================================================
+const [books, setBooks] = useState([
+  { id: 1, title: 'Sense and Sensibility' },
+  { id: 2, title: 'Oliver Twist' },
+]); 
+
+const startChangeObj = (id,newTitle)=>{
+  const objUpdated = books.map((book)=>{
+    if(book.id===id){
+      book.title = newTitle
+    }
+    return book
+  })
+  setBooks(objUpdated)
+}
+==========================================================================
+B. 
+Changing Properties In Objects
+Properties in an object can be changed or added by using the spread 
+syntax (the ...)
+заметь это ОДИН объект
+===========================================================================
+const [fruit, setFruit] = useState(
+  { color:"orange",sort:"second" },
+  
+);  
+
+const startChangeObj = (newColor)=>{
+  const objUpdated = {
+    ...fruit,color:newColor
+  }
+  setBooks(objUpdated)
+}
+========================================================================
+C
+Removing Property in Objects
+========================================================================
+
+const [fruit, setFruit] = useState({
+  color: 'red',
+  name: 'apple',
+});
+
+const removeColor = () => {
+  // `rest` is an object with all the properties
+  // of fruit except for `color`.
+  const { color, ...rest } = fruit;// исход объект для деребанивания
+
+  setFruit(rest);
+};
