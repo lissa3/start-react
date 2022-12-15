@@ -1,20 +1,23 @@
 import React from 'react';
-// Udemy's code editor is a little weird... 
-// We do *not* need an 'import {useState}' line
+import {useState} from 'react'
 
 function Input({ onSubmit }) {
-  const [text, setText] = React.useState('');
+  const [title, setTitle] = useState('');
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(text);
-    setText('');
+    onSubmit(title);
+    setTitle('');
   };
+  const readTitle = (e)=>{
+    setTitle(e.target.value)
+  }
   
   return <form onSubmit={handleSubmit}>
     <div>
         <label>Title</label>
-        <input value={text} onChange={e => setText(e.target.value)} />
+        <input value={title} onChange={readTitle} />
+        
     </div>
     <button>Submit</button>
   </form>

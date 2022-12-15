@@ -1,36 +1,40 @@
-import React from 'react';
-// Udemy's code editor is a little weird... 
-// We do *not* need an 'import {useState}' line
+import {useState} from 'react'
 
-function EditForm({ onSubmit, colors }) {
-  const first = colors[0]
-  const [n, setN] = React.useState(first ? first.id : '');
-  const [text, setText] = React.useState(first ? first.text : '');
+function EditForm({ onSubmit, books }) {
+  const first = books[0]
+  const [id, setId] = useState(first ? first.id : '');
+  const [title, setTitle] = useState(first ? first.title : '');
   
+  const getTitle = (e)=>{
+    setTitle(e.target.value)
+  }
   const handleChange = (e) => {
     const id = parseInt(e.target.value);
-    setN(id);
-    const color = colors.find(c => c.id === id);
-    if (color) {
-        setText(color.title);  
+    console.log("line 13 ID is",id)
+    setId(id);
+    const book = books.find(book => book.id === id);
+    if (book) {
+        setTitle(book.title);  
     }
   };
   
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(n, text);
+    onSubmit(id, title);
   };
   
   return <form onSubmit={handleSubmit}>
     <div>
         <label>Id of color to Change</label>
-        <select value={n} onChange={handleChange}>
-         {colors.map(c => <option key={c.id} value={c.id}>{c.id}</option>)}
+        <select value={id} onChange={handleChange} >
+         {books.map(book => <option key={book.id} value={book.id}>{book.id}</option>)}
         </select>
     </div>
     <div>
         <label>New Text</label>
-        <input value={text} onChange={(e) => setText(e.target.value)} />
+        <input value={title} onChange={getTitle} />
+        
     </div>
     <button>Change</button>
   </form>
