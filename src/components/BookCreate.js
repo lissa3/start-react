@@ -1,21 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import {getRandomId} from '../utils.js'
+
 
 
 const BookCreate = ({onCreate})=> {  
     const [title,setTitle] = useState("")
-    const getTitle = (e)=>{
-        // event == change in input field
-    //    console.log("input is:",e.target.value)
-       setTitle(e.target.value); 
-               
+    const getTitle = (e)=>{        
+       setTitle(e.target.value);                
     }
     const collectTitle = (e)=>{
         // event == submit form
-        e.preventDefault()
-        const id = getRandomId()
-        onCreate(title,id);
+        e.preventDefault()        
+        onCreate(title);
         setTitle("")
     }      
     return(
