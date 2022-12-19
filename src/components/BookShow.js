@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import BookEdit from "./BookEdit";
 import { useState } from "react";
+import BooksContext from "../context/books";
 
 
-const BookShow = ({book,onDelete,onEdit})=> {   
+const BookShow = ({book})=> {   
   const [showEdit,setShowEdit] = useState(false);
+  const {deleteBookById} = useContext(BooksContext)
+
+
+
     const handleClickDelete = ()=>{
       // onDelete == callback from App.js component
-      onDelete(book.id)
+      deleteBookById(book.id)
     }
     
     
     const toggleEdit = ()=>{  
       setShowEdit(!showEdit)
     }
-    const handelEditSubmit = (id,newTitle)=>{
-      setShowEdit(false)
-      onEdit(id,newTitle)
+    const handelEditSubmit = ()=>{
+      setShowEdit(false);      
     }
     
     let content = <h3>{book.title}</h3>   
@@ -32,7 +36,7 @@ const BookShow = ({book,onDelete,onEdit})=> {
                
         <div className="actions">
           <button onClick = {handleClickDelete}  className="delete">Delete</button>                
-          <button onClick = {toggleEdit} onEdit={onEdit} className="edit">Edit</button> 
+          <button onClick = {toggleEdit} className="edit">Edit</button> 
         </div>              
       </div>      
     )
