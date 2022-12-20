@@ -6,10 +6,12 @@ import BookList from "./components/BookList";
 
 
 function App() {   
-  const {fetchBooks} = useContext(BooksContext)
+  const {fetchBooks} = useContext(BooksContext);
+  
   useEffect(()=>{
+    // still variable: warning ESLint
     fetchBooks()
-  },[]);  
+  },[fetchBooks]);  
 
   return(
       <div className="app">   

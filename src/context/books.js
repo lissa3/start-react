@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext,useState } from "react";
+import { createContext,useState,useCallback } from "react";
 
 const BooksContext = createContext();
 
@@ -7,7 +7,13 @@ const BooksContext = createContext();
 function Provider({children}){
     const [books,setBooks] = useState([]);     
     const baseURL=  "http://127.0.0.1:8000/zork/notes/";
-    const fetchBooks =  async ()=>{                     
+    // let react know that func should be 'frozen'
+    // array is required ( empty vs + elems) 
+    // const stableFetchBooks = useCallback(
+    //   fetchBooks,[]
+    // )
+    // однако можно сделать wrapper like: 
+    const fetchBooks = useCallback( async ()=>{                     
         await axios.get(baseURL)
         .then(
         (resp)=>{
@@ -16,7 +22,10 @@ function Provider({children}){
             }
         }
         ).catch(err=>console.log("error: ",err))      
-    } 
+    },[])
+    
+
+
     const createBook = async (title)=>{      
         await axios.post(baseURL,{title:title})
           .then((resp)=>{      

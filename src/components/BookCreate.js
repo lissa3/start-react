@@ -1,15 +1,13 @@
 import React from "react";
-import { useState,useContext } from "react";
-import BooksContext from '../context/books';
-
-
+import { useState } from "react";
+import useBooksContext from '../hooks/useBookContext';
 
 const BookCreate = ()=> {  
     const [title,setTitle] = useState("")
     const getTitle = (e)=>{        
        setTitle(e.target.value);                
     }
-    const {createBook} = useContext(BooksContext)
+    const {createBook} = useBooksContext()
     const collectTitle = (e)=>{
         // event == submit form
         e.preventDefault()        
