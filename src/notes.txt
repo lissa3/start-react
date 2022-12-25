@@ -1,0 +1,46 @@
+css styles: tailwind for react
+npm install prop-types (types of props)
+npm install classnames  (add atomic classes)
+npm install react-icons (treac icons as a react comp)
+1.css tailwind (let op: tailwind for react!)
+Use case:
+    create menu -> 
+        display page with a drop-down;
+        display accordion;
+        demo buttons
+
+
+1. Custom button component
+new:
+    {props== children}        
+    позволяет тупо прописать "название кнопки" между > ... < 
+    instead of props = > {text}
+Под эту фичу (children) можно замаскировать:     
+    plain text
+    other component (icon)
+    and even form!
+
+? Prevent two props in <Button>
+Исход: у меня props в виде boolean    
+    if present == true <Button outline> == <Button outline={true}>
+
+Help: 3-d party lib: 
+    npm install prop-types --save
+    import PropTypes from 'prop-types';
+
+
+перед export line of компонета - проверка props
+
+Button.propTypes = {
+  // chaining possible
+  rounded: PropTypes.bool.isRequired,  
+
+Для решения вопроса о недопустимости передачи (использования) 2-х 
+в комп-те предложено решение типа:
+const isUniqueCount = Number(!!primary)  
+учитвывая, что props(primary,secondary)  == true по сути могут быть трансформированы в 1 и 0
+моё решение с iteration in props похоже не подойдёт.
+Итак:
+если object == props не имеет в себе объекта с ключом, к я запрашиваю в комп-те,
+то я получу undefined |==> Number (!!undefined) == 0 (zero)
+otherwise 1

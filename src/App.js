@@ -1,32 +1,27 @@
 import React from "react";
-import { useState } from "react";
-import AnimalShow from "./components/AnimalShow";
-import './App.css'
+import Button from "./components/Button";
+import { FcLibrary } from "react-icons/fc";
+import {FcAddDatabase } from "react-icons/fc";
 
-function App() {        
-  const getAnimal = ()=>{
-      let arr = ["bird","cow","horse","dog","gator","cat","horse"]
-      const idx = Math.round(Math.random()*(arr.length -1));         
-      return arr[idx]
-    }
-    
-    const [animals, setAnimal] = useState([]);     
-    const handleClick = (e)=>{               
-      setAnimal([...animals,getAnimal()])  
-           
-    } 
-    // iteration: applly call-back for each elem in arr(wrap in comp) 
-    const listAnimals =  animals.map((animal,index)=>{
-      return <AnimalShow type={animal} key={index}></AnimalShow>   
-      
-    })  
+function App() {   
+  const handleClick = ()=>{
+    console.log("click detected")
+  }     
+  const handleMouseOver = ()=>{
+    console.log("mouse over???")
+  }     
+  
     return(
-      <div className="app">        
-        <button onClick={handleClick}>
-          Add animal
-        </button>        
-        <div className="animal-list">{listAnimals}</div>                  
-          
+      <div className="container mx-auto px-4">        
+       <div className="flex flex-col" >
+        <Button onClick={handleClick} className="mb-5" primary rounded>
+          <FcLibrary /> First click Me
+        </Button>         
+        <Button danger onMouseEnter={handleMouseOver} >Second</Button>         
+        <Button success>Sale</Button>         
+        <Button rounded> <FcAddDatabase /> Adds</Button>         
+        <Button secondary rounded> Buy</Button>       
+       </div>           
       </div>      
     )
 }
