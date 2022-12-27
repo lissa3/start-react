@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import AnimalShow from "./components/AnimalShow";
-import './App.css'
+
+
 
 function App() {        
   const getAnimal = ()=>{
@@ -21,11 +22,12 @@ function App() {
       
     })  
     return(
-      <div className="app">        
-        <button onClick={handleClick}>
+      <div className="bg-slate-50"> 
+          
+        <button  className="rounded border border-red-600"   onClick={handleClick}>
           Add animal
         </button>        
-        <div className="animal-list">{listAnimals}</div>                  
+        <div className="">{listAnimals}</div>                  
           
       </div>      
     )
