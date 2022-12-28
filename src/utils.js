@@ -1,5 +1,5 @@
 const doSortDown =(arr)=>{
-    arr.sort(
+    return arr.sort(
       function(a,b){
         if(parseInt(a.price)>parseInt(b.price)){
           return 1
@@ -10,9 +10,11 @@ const doSortDown =(arr)=>{
         }
       }
     )
+    // return arr
   }
 const doSortUp =(arr)=>{
-    arr.sort(
+
+    return arr.sort(
       function(a,b){
         if(parseInt(a.price)<parseInt(b.price)){
           return 1
@@ -23,6 +25,8 @@ const doSortUp =(arr)=>{
         }
       }
     )
+    // console.log("arr is ",arr)
+    // return arr
   }  
 
 export {doSortDown,doSortUp}  

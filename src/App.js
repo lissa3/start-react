@@ -1,6 +1,6 @@
 import React from "react";
 import { useState,useEffect } from "react";
-import booksList from "./bron.json"
+// import booksList from "./bron.json"
 import axios from "axios"
 import Book from "./components/Book";
 import SelectMenu from "./components/SelectBook";
@@ -12,36 +12,41 @@ import {doSortUp,doSortDown} from "./utils.js"
 function App() {   
   const [books,setBooks] = useState([]); 
   const [down,setDown] = useState(true);
-  const [total,setTotal] =useState(0)
-// initial books collection
+  const [total,setTotal] =useState(0);
+  const [arr,setArray] =useState([]);
+
+// get initial books collection  
+  async function getData(){
+    // await axios.get("http://localhost:3000/bron.json")
+    try{
+      let resp = await axios.get("./bron.json")      
+      setBooks(resp.data)      
+    }catch{
+      console.log("error")
+    }  
+  }
   useEffect(()=>{
-    setBooks(booksList)
-  },[])
-  // async function getData(){
-  //   // await axios.get("http://localhost:3000/bron.json")
-  //   await axios.get("./src/bron.json")
-  //   .then((resp)=>{
-  //     setBooks(resp)
-  //   })
-  //   .catch(err=>console.log(err))
-  // }
-  
-  
+    getData()
+  },[]);  
+
+  // get list books for a given category
   const takeAction = (categ)=>{    
-    if(categ){
-    const updatedBooks = books.filter((book)=>{
-      return book.category === categ
-    })
-    setBooks(updatedBooks)
+      if(categ){
+      const updatedBooks = books.filter((book)=>{
+        return book.category === categ
+      })
+      setBooks(updatedBooks)
+    }
   }
-  }
-  // sort by price (default low on top (down == true))  
+  // sort by price   
   const toggleSortPrice = ()=>{
+    let tempCopy = books.slice();
+    
     setDown(!down);    
-    if(down) {      
-      doSortDown(books);      
-    }else{     
-      doSortUp(books);      
+    if(down) {         
+      setBooks(doSortDown(tempCopy))
+    }else{         
+      setBooks(doSortUp(tempCopy))
     }
 
   }
@@ -50,12 +55,27 @@ function App() {
     direction = <div className="ml-3"><ImArrowUp2/></div>
   }
   // collect books -> price on click
-  const handlePrice = (price)=>{
-    setTotal(price);
-    console.log("total is",total)
+  const handleCalcPrice = (newBook)=>{ 
+    console.log("clicked obj",newBook) 
+    // create a new array in order to re-render a component  
+    const updatedArrayBooks = [
+      newBook,...arr
+    ]    
+    setArray(updatedArrayBooks);  
+    
+   
+    const sumPrice = arr.reduce(
+      (prev, currentObject) => prev + currentObject.price,0
+      
+    );
+    console.log(sumPrice)
+    setTotal(sumPrice)
+    
+    
+    
   }  
   const bookCollection  = books.map((book)=>{        
-    return <Book book={book} key={book.id} collectPriceVal={handlePrice}/>
+    return <Book book={book} key={book.id} collectPriceVal={handleCalcPrice}/>
   })   
  
     return(
@@ -74,12 +94,9 @@ function App() {
        
         <div className=""> 
           {bookCollection}         
-        </div> 
+        </div>         
         <div className="mt-6">
-          <h2>Total count: </h2>: 
-        </div>
-        <div className="mt-6">
-          <h3>Total price: {total} </h3>: 
+          <h3>Total price: $ {total} </h3>: 
           
         </div>
       </div>     
