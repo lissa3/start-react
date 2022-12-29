@@ -2,27 +2,19 @@ import React from 'react';
 import { useState } from 'react';
 import Content from './Content';
 
-const Accordion = ({items}) => {
-    const [isOpen,setIsOpen] = useState(false);
-
-    // однако при этом будут "открываться ВСЕ div with content"
-    
+const Accordion = ({item}) => {
+    const [isOpen,setIsOpen] = useState(false);      
     const handleOpen = ()=>{
-        setIsOpen(!isOpen);
-        
-    }   
-
-    const renderedItems = items.map((item)=>{
-        return (
-            <div key={item.id}>
-            <h4 onClick={handleOpen}>{item.label}</h4>           
-            <Content content={item.content} showContent={isOpen}/>
-            </div>          
-        )
-    })
+        setIsOpen(!isOpen);        
+    } 
+    let content = "";
+    if(isOpen){
+        content = <div>{item.content}</div>
+    }    
     return (
         <div>
-           {renderedItems}
+            <div onClick={handleOpen}>{item.label}</div>
+           {content}
         </div>
     );
 };
