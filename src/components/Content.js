@@ -6,7 +6,6 @@ const Content = ({content,showContent}) => {
     if(showContent){
         text = content
     }
-
     return (
         <div>
             {text}
