@@ -1,0 +1,29 @@
+const [mostRecentValy,setVal] = useState(null or -1)
+
+2 way of using setValXYZ
+============================
+Why?
+
+1. setVal(newVal(here idx))
+vs
+react optimis не молниеносно updates val in state, ожидая, что
+мы может быть ещё что-то захотим про-update-ть
+здесь мы "искуст" пытаемся очень быстро сделать клик, а реакт тормозит по вышеуказ-ой причине.
+Можно завести мотор "без ожидания", а можно как здесь, сделать
+ручками спец указание,
+setVal |=-=> получит в арг самую последнюю версию переменной из state
+
+2. setVal(arror func with arg= currentExtendedIndex == the most recent val from state)
+Этим мы дадим понять, что мы хотим немедля! update and re-render 
+
+const handleClick = (idx)=>{       
+       setExpandedIndex((currentExtendedIndex)=>{
+        if(currentExtendedIndex ===idx){
+            return null
+        }else{
+            // return a new val (without delay)
+            return idx т.е. это значение и будет заведено в обойму
+        }
+       })
+    }       
+     
