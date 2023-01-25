@@ -1,36 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import AnimalShow from "./components/AnimalShow";
+import React, { useState } from "react";
+import { SideBar } from "./components/SideBar";
 
 
 
-function App() {        
-  const getAnimal = ()=>{
-      let arr = ["bird","cow","horse","dog","gator","cat","horse"]
-      const idx = Math.round(Math.random()*(arr.length -1));         
-      return arr[idx]
-    }
-    
-    const [animals, setAnimal] = useState([]);     
-    const handleClick = (e)=>{               
-      setAnimal([...animals,getAnimal()])  
-           
-    } 
-    // iteration: applly call-back for each elem in arr(wrap in comp) 
-    const listAnimals =  animals.map((animal,index)=>{
-      return <AnimalShow type={animal} key={index}></AnimalShow>   
-      
-    })  
-    return(
-      <div className="bg-slate-50"> 
-          
-        <button  className="rounded border border-red-600"   onClick={handleClick}>
-          Add animal
-        </button>        
-        <div className="">{listAnimals}</div>                  
-          
-      </div>      
+function App() {   
+  const [currentComp,setComponent] = useState([]);
+  const getChoice = (choice)=>{
+    console.log(choice)
+    setComponent(choice)
+  }
+  
+  return(            
+     <div className="flex ">
+          <div className="flex-none w-1/4 pl-3 ml-3 bg-red-50">
+            <SideBar onChange={getChoice} value={currentComp}/>
+          </div>        
+          <div className="flex-none w-3/4 bg-orange-50">
+            Placeholder for arrays ...
+          </div>
+      </div>  
     )
 }
-
 export default App;
