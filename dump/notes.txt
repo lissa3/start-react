@@ -187,3 +187,9 @@ const removeColor = () => {
 
   setFruit(rest);
 };
+--------------------------------------------------------------------------
+prettier
+pycharm: needs settings with path to prettier
+C:\Users\tanja\Desktop\myreact\mio\node_modules\prettier
+To format code use: 
+npx prettier --write .
