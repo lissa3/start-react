@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App'
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 
-import { NavigationProvider } from './context/navigation';
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap/dist/css/bootstrap.css.map'
 
@@ -11,10 +11,10 @@ import { NavigationProvider } from './context/navigation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <NavigationProvider>
-      <App/>  
-    </NavigationProvider>
+  <React.StrictMode>   
+    <BrowserRouter>
+      <App/>      
+    </BrowserRouter>
   </React.StrictMode>
 );
 

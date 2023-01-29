@@ -1,21 +1,17 @@
 import * as React from 'react';
-import Panel from './Panel';
+import { Link } from 'react-router-dom';
 
-export function SideBar({onChange,value}) {
-    const comps = ["Accordion","DropDown","Button","Slider"];    
-    const itemFabric = comps.map((comp,idx)=>{
-        return (
-          <Panel onClick={()=>onChange(comp)} value={value}  key= {idx} className="cursor-pointer">
-          {comp}
-         </Panel>           
-        )
-    })
+export function SideBar() {    
 
   return (
-    <div>
-        <h4>SideBar coming</h4>
-        {itemFabric}
+   
+    <section className='flex flex-col'>
       
-    </div>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/posts">Posts</Link>
+      <Link to="/posts/123">Post</Link>
+      <Link to="/posts/new-post">New Post</Link>
+    </section>
   );
 };
